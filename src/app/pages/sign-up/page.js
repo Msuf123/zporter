@@ -37,7 +37,7 @@ const SignUp = () => {
       let res=await signups(email, password); // Calls the signup function
       setSuccess("Sign Up Successful!");
       if(res){
-           window.location.href = 'pages/home'; 
+           window.location.href = 'home'; 
       }
       // Redirect to login page after successful sign-up
       
