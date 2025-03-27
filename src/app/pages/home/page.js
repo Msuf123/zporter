@@ -4,7 +4,7 @@ import { auth } from '@/lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getUserData } from './fetchFunction/fetchFunction';
 import Loader from './InnerComponents/Loading/loading';
-import './page.module.css';
+import style from './page.module.css';
 import { ScreeningCard } from './InnerComponents/Cards/Cards';
 
 const Dashboard = () => {
@@ -40,13 +40,13 @@ const Dashboard = () => {
   return (
     <div>
 
-        <div className="dashboard-container">
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",width:"98%",margin:"20px auto"}}>
       <h1 className="dashboard-title">
         Welcome, {user.email || 'User'}!
       </h1>
       <button
         onClick={onLogout}
-        className="logout-button"
+       className={style.logoutButton}
       >
         Logout
       </button>
@@ -64,7 +64,8 @@ const Dashboard = () => {
     border: 'none',              // No border
     borderRadius: '5px',         // Rounded corners
     cursor: 'pointer',          // Pointer cursor on hover
-    transition: 'background-color 0.3s ease', // Smooth transition for background color change
+    transition: 'background-color 0.3s ease',
+      margin:"20px" // Smooth transition for background color change
   }}
   onClick={() => window.location.href = 'form'}
 >

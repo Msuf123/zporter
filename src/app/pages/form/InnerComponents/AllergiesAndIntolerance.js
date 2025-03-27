@@ -9,9 +9,9 @@ const intolerancesList = [
   'Lactose', 'Gluten', 'Histamine', 'Food Additives', 'Fructose', 'Caffeine', 'Alcohol', 'Sulphites', 'Salicylates', 'Monosodium glutamate (MSG)'
 ];
 
-const AllergiesAndIntolerances = ({ onAllergyChange, onIntoleranceChange,valueOfintolerances ,valueOfAllergies}) => {
-  const [allergies, setAllergies] = useState(valueOfAllergies||[]);
-  const [intolerances, setIntolerances] = useState(valueOfintolerances||[]);
+const AllergiesAndIntolerances = ({ onAllergyChange, onIntoleranceChange, valueOfIntolerances, valueOfAllergies }) => {
+  const [allergies, setAllergies] = useState(valueOfAllergies || []);
+  const [intolerances, setIntolerances] = useState(valueOfIntolerances || []);
   const [allergyInput, setAllergyInput] = useState('');
   const [intoleranceInput, setIntoleranceInput] = useState('');
 
@@ -26,19 +26,21 @@ const AllergiesAndIntolerances = ({ onAllergyChange, onIntoleranceChange,valueOf
 
   const handleSelect = (selectedValue, type) => {
     if (type === 'allergy') {
-      const newAllergies = selectedValue 
-        ? [...new Set([...allergies, selectedValue])]
-        : allergies;
-      setAllergies(newAllergies);
-      setAllergyInput('');
-      onAllergyChange(newAllergies);
+      // Allow adding custom allergies even if not in the predefined list
+      if (selectedValue && !allergies.includes(selectedValue)) {
+        const newAllergies = [...allergies, selectedValue];
+        setAllergies(newAllergies);
+        setAllergyInput('');
+        onAllergyChange(newAllergies);
+      }
     } else {
-      const newIntolerances = selectedValue 
-        ? [...new Set([...intolerances, selectedValue])]
-        : intolerances;
-      setIntolerances(newIntolerances);
-      setIntoleranceInput('');
-      onIntoleranceChange(newIntolerances);
+      // Allow adding custom intolerances even if not in the predefined list
+      if (selectedValue && !intolerances.includes(selectedValue)) {
+        const newIntolerances = [...intolerances, selectedValue];
+        setIntolerances(newIntolerances);
+        setIntoleranceInput('');
+        onIntoleranceChange(newIntolerances);
+      }
     }
   };
 
@@ -84,7 +86,11 @@ const AllergiesAndIntolerances = ({ onAllergyChange, onIntoleranceChange,valueOf
         <select
           value={allergyInput}
           onChange={(e) => {
-            handleSelect(e.target.value, 'allergy');
+            const value = e.target.value;
+            // If custom option is selected or input doesn't match predefined list
+            if (value || (allergyInput && !allergiesList.includes(allergyInput))) {
+              handleSelect(value || allergyInput, 'allergy');
+            }
           }}
           onInput={(e) => handleSearchChange(e, 'allergy')}
           style={styles.select}
@@ -93,7 +99,7 @@ const AllergiesAndIntolerances = ({ onAllergyChange, onIntoleranceChange,valueOf
           {getAllergyOptions.map((allergy) => (
             <option key={allergy} value={allergy}>{allergy}</option>
           ))}
-          {allergyInput && getAllergyOptions.length === 0 && (
+          {allergyInput && !allergiesList.includes(allergyInput) && (
             <option value={allergyInput}>
               {allergyInput} (Custom)
             </option>
@@ -119,7 +125,11 @@ const AllergiesAndIntolerances = ({ onAllergyChange, onIntoleranceChange,valueOf
         <select
           value={intoleranceInput}
           onChange={(e) => {
-            handleSelect(e.target.value, 'intolerance');
+            const value = e.target.value;
+            // If custom option is selected or input doesn't match predefined list
+            if (value || (intoleranceInput && !intolerancesList.includes(intoleranceInput))) {
+              handleSelect(value || intoleranceInput, 'intolerance');
+            }
           }}
           onInput={(e) => handleSearchChange(e, 'intolerance')}
           style={styles.select}
@@ -128,7 +138,7 @@ const AllergiesAndIntolerances = ({ onAllergyChange, onIntoleranceChange,valueOf
           {getIntoleranceOptions.map((intolerance) => (
             <option key={intolerance} value={intolerance}>{intolerance}</option>
           ))}
-          {intoleranceInput && getIntoleranceOptions.length === 0 && (
+          {intoleranceInput && !intolerancesList.includes(intoleranceInput) && (
             <option value={intoleranceInput}>
               {intoleranceInput} (Custom)
             </option>
@@ -145,6 +155,8 @@ const styles = {
     flexDirection: 'column',
     gap: '20px',
     fontFamily: 'Arial, sans-serif',
+    width:"50%",
+    margin:"auto"
   },
   section: {
     display: 'flex',

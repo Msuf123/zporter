@@ -20,6 +20,8 @@ const ECGTestHistory = ({ onECGTestChange,handleSubmitCall,ecgDetailsValue,ecgTe
     setImageUplaoding(false);
     setFilePreview(null);  // Reset file preview
     setFileAttachment(null);
+    
+    handleSubmit()
     // Get the reference to the file you want to delete
     const filePath = decodeURIComponent(imageUrl.split('o/')[1].split('?')[0]);
 
@@ -27,7 +29,7 @@ const ECGTestHistory = ({ onECGTestChange,handleSubmitCall,ecgDetailsValue,ecgTe
 
     // Delete the file from Firebase Storage
     await deleteObject(fileRef);
-     handleSubmit()
+     
     // After deletion, update the UI and state
      // Reset the file attachment state
   } catch (error) {
@@ -129,7 +131,11 @@ const ECGTestHistory = ({ onECGTestChange,handleSubmitCall,ecgDetailsValue,ecgTe
 
 
 
-
+const handleImageError = () => {
+    setFileAttachment(null),
+    setFilePreview(null)
+    // Set error state to true when the image fails to load
+  };
 
 
 
@@ -188,7 +194,7 @@ const ECGTestHistory = ({ onECGTestChange,handleSubmitCall,ecgDetailsValue,ecgTe
           <div style={imageUplaoding?{backgroundColor:"rgba(20, 20, 20, 0.54)",position:"absolute",top:"0px",left:"0px",right:"0px",bottom:"0px",display:"flex",alignItems:'center',justifyContent:"center"}:{display:"none"}}>
             <span style={{color:"white"}}>Uploading...</span>
           </div>
-          <img src={filePreview} alt="Preview" style={{ maxWidth: '300px', maxHeight: '300px' }}  />
+          <img src={filePreview} alt="Preview" style={{ maxWidth: '300px', maxHeight: '300px' }} onError={handleImageError}  />
           <div style={showDeleteButton&&!imageUplaoding?{backgroundColor:"rgba(20, 20, 20, 0.54)",position:"absolute",top:"0px",left:"0px",right:"0px",bottom:"0px",display:"flex",
             alignItems:"center",justifyContent:"center"
           }:{display:"none"}}>

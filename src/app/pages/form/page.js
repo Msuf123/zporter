@@ -69,12 +69,14 @@ export default function UserForm({id,generalHealthProp,imageUrlProp,hasHealthIss
      alert("Wait while we are loading userName")
     }
     if (id) {
+      console.log("id val",id)
         // Update document if `id` exists
-        const docRef = doc(firestore, 'record', id); // Reference to the document we want to update
+        const docRef = doc(firestore, 'record', id); 
+        // Reference to the document we want to update
         const currentDateTime = new Date();
         const formattedDateTime = `${currentDateTime.toLocaleDateString()} ${currentDateTime.toLocaleTimeString()}`;
         updateDoc(docRef, { userName,formattedDateTime, ...formData }).then((docREf)=>{
-          console.log("Documetn updated",docREf.id)
+          console.log("Documetn updated")
         }) .catch((error) => {
     console.error("Error adding document: ", error);
   });// Update the document with new data

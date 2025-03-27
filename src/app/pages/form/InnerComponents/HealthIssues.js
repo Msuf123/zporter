@@ -1,19 +1,22 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const HealthIssues = ({ onChange ,value}) => {
   const [healthData, setHealthData] = useState(value);
 
   const handleChange = (e, question) => {
     const value = e.target.value;
+    
     setHealthData((prevData) => {
       const updatedData = { ...prevData, [question]: value };
        // Sending the updated data to parent component
       return updatedData;
     });
-    onChange(healthData);
+    
   };
-
+ useEffect(()=>{
+  onChange(healthData)
+ },[healthData])
   return (
     <div style={styles.container}>
       <label style={styles.question}>Do you have any current pain?</label>

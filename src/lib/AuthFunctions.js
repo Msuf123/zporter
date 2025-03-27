@@ -8,9 +8,10 @@ export const signup = async (email, password) => {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
     console.log('User signed up successfully');
+    return true
   } catch (error) {
     console.error(error.message);
-    throw error;
+    return false
   }
 };
 
