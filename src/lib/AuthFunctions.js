@@ -27,7 +27,7 @@ export const login = async (email, password) => {
 };
 
 // Sign Out Function
-export const logout = async () => {
+ const logout = async () => {
   try {
     await signOut(auth);
     console.log('User signed out successfully');
