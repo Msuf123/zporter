@@ -1,36 +1,156 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+All players at Zporter should once a year, get a notification to run a medical screening and answer upon some medical questions in their smartphone. To do what we can and help clubs and coaches, make sure their players have the neccessary basic health to play football. 
 
-## Getting Started
+A Medical screening form should be made available in both our Flutter apps and responsive web and saved in our Firebase BE as well as future Data lake and make available for our Big Query and AI services while anonymized for any third party users that is not a Family Member or active Coach or Team Manager, Agent etc to the Player. 
 
-First, run the development server:
+Epic - Medical Update
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+ 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+User Stories
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+A Player should once a year, get a notification with a link to a Medical screening form. 
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Time again for a Medical Update, click heare. 
 
-## Learn More
+A Player should be able to answer upon some standardized questions about their health and medical history, in a form. And get a summary of there answers to share with anyone they like. 
 
-To learn more about Next.js, take a look at the following resources:
+Todays date
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+General health slider ( Very Bad to Very Good ) 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Yes/No Questions about eventual pains or other healht issues
 
-## Deploy on Vercel
+Detailed descriptions in text and ev. image/video attachments. 
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Medication and Supplements Questions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Specific WADA control question with a link to the WADA prohibited list
+
+Allergies and Intolerances, where last answers should be saved to simplify it for the user to reply and perhaps edit, or add any new allergies or intolerances. 
+
+List of allergies
+
+ Milk
+
+ Eggs
+
+Fish 
+
+Shellfish
+
+Tree nuts
+
+Peanuts
+
+Wheat
+
+Soybeans
+
+Dust mites
+
+Pollen
+
+List of Intolerances
+
+Lactose 
+
+Gluten 
+
+Histamine 
+
+Food Additives
+
+Fructose
+
+Caffeine 
+
+Alcohol
+
+Sulphites 
+
+Salicylates 
+
+Monosodium glutamate (MSG)
+
+Other 
+
+Blood Type and & Vaccination History, where last answers should be saved to simplify it for the user to reply and perhaps edit, or add any new vaccinations
+
+Blood Types
+
+A positive (A+)
+
+A negative (A-)
+
+B positive (B+)
+
+B negative (B-)
+
+AB positive (AB+)
+
+AB negative (AB-)
+
+O positive (O+)
+
+O negative (O-)
+
+Vaccinations
+
+DTaP
+
+MMR
+
+Hib
+
+Hepatitis B
+
+Polio
+
+Varicella
+
+Influenza
+
+Pneumococcal
+
+Meningococcal
+
+HPV
+
+Other - write
+
+Major Injury History, where last answers should be saved to simplify it for the user to reply and perhaps edit, or add any new injuries
+
+Major Illnesses and Family History, where last answers should be saved to simplify it for the user to reply and perhaps edit, or add any new illnesses or Family History Illnesses
+
+ECG Test control question, where last answers should be saved to simplify it for the user to reply and perhaps edit, or add any new ECG Test history and add ev. Text where and who did this test and the option to add an Image or Video attachment. 
+
+ 
+
+A Player should have a list of Medical Update records saved in his Health Dashboard
+
+A Player should be able to edit and delete his Medical Updates
+
+A Player should be able to share his Medical Screenings using his Smartphone or Tablets, Browsers default sharing features. 
+
+ 
+
+A Coach, Team Manager should get notified when a player has answered their screening and be able to view their players medical screening answers history in his Teams Players Health History Records
+
+(userid) has finalized a Medical Update, click here
+
+A Family Member as a parent or agent to a player, should get notified and be able to view their players last medical screening answers in their Health History Records
+
+(userid) has finalized a Medical Update, click here
+
+Design Examples
+
+zporter-player-medical-update 
+
+Alt 1 and 2 on Medical Updates on the Dashboard Health bottom.
+
+Open image-20250304-151331.png
+image-20250304-151331.png
+Open image-20250304-151406.png
+image-20250304-151406.png
+Open image-20250304-151546.png
+image-20250304-151546.png

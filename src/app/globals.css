@@ -40,3 +40,88 @@ a {
     color-scheme: dark;
   }
 }
+/* 
+The project you're outlining involves implementing a system for managing medical screenings for players on the Zporter platform.
+ Here' s a breakdown of what needs to be done based on the user stories and requirements you provided.
+  ### **Key Components of the Project:** 1. **Notifications and Links for Medical Screening:** - 
+  Players need to receive a notification annually to complete their medical screening form. - 
+  The notification will include a link to the medical screening form. 2. **Medical Screening Form:** - 
+  The form should be available on both Flutter mobile apps and a responsive web interface. - Players should be able to: -
+   Provide answers to standardized medical questions. - Share a summary of their answers with anyone they choose. - 
+   Attach images or videos for certain fields (e.g., ECG tests). - **Form Sections:** - **General Health Slider** (Very Bad to Very Good) -
+    **Yes/No Questions** (e.g., pain, health issues) - **Medication and Supplements Questions** -
+    **WADA Control Question** (with a link to the WADA prohibited list) - 
+    **Allergies and Intolerances** (with predefined options and the ability to add new ones) - 
+    **Blood Type and Vaccination History** (predefined options and the ability to add/edit) - 
+    **Major Injury History** - **Major Illnesses and Family History** - **ECG Test History** (with text, image, or video attachments)
+     3. **Storage and Data Management:** - The data from the medical form needs to be stored in Firebase (backend),
+and possibly in a Data Lake in the future. - The data should be anonymized for third-party users who are not family members,
+active coaches,
+or team managers. - Use **BigQuery** and **AI services** for analysis and processing. 4. **Health Dashboard:** - 
+Players should have access to a **Health Dashboard** where they can view a history of their medical screenings. -
+ Players should be able to: - Edit and delete past medical updates. - Share their medical screenings using default smartphone/tablet or browser sharing features. 5. **Coaches and Family Members Notifications:** - **Coaches and Team Managers** should be notified when a player completes their medical screening,
+with a link to view the player’s medical history. - **Family Members/Agents** (parents, guardians) should also be notified and able to view their player's most recent medical screening.
+
+
+### **Project Components to Build:** 1. **User Notifications:** - **Backend**: Set up Firebase Cloud Messaging or other push notification services to notify players when it's time to complete the screening.
+ - **Frontend**: Handle the UI for displaying notifications and directing users to the form. 2. **Medical Screening Form (Flutter & Web):** - **Form Fields**: Implement the form with the various sections for health,
+medication,
+allergies,
+blood type,
+injury history,
+ECG test,
+etc. - **Pre-filled Data**: Use Firebase to pre-fill past answers (e.g., allergies, blood type, injuries) and allow players to edit or add new data. - **File Attachments**: Enable the ability to attach images or videos (e.g., ECG test images). 3. **Firebase Backend:** - **Database**: Store player medical data securely in Firebase Firestore or Realtime Database. - **Access Control**: Implement Firebase Authentication and Firestore security rules to ensure data access is restricted (only coaches, team managers, family members, and agents can view the data). - **Data Anonymization**: Ensure that anonymization is applied for third-party users to maintain privacy. 4. **Health Dashboard:** - **Player Dashboard**: Display a list of medical updates for players. Players can view,
+edit,
+or delete their records. - **Data Management**: Implement the functionality to handle user inputs,
+updates,
+deletions,
+and data retrieval in the dashboard. 5. **Sharing Features:** - Allow players to share their medical screening data via their smartphone or browser’s native sharing features. 6. **Notifications for Coaches and Family Members:** - **Backend**: Send notifications when a player completes a medical screening to coaches and family members (using Firebase Cloud Messaging). - **Frontend**: Coaches and family members should have access to view the player’s health history. ### **Data Structure:** In Firebase (Firestore),
+you could structure the player’s data like this: ```json {
+  "players": {
+    "player_id": {
+
+      "name": "Player Name",
+      "email": "player@example.com",
+      "medical_screenings": {
+        "screening_id": {
+
+          "date": "2025-03-01",
+          "general_health": 4,
+          // Slider value (1-5)
+          "health_issues": "No pain",
+          "medications": ["Aspirin"],
+          "allergies": ["Peanuts",
+          "Milk"],
+          "blood_type": "O+",
+          "vaccinations": ["Hepatitis B",
+          "Polio"],
+          "injuries": ["Fractured leg (2019)"],
+          "ecg_test": {
+            "date": "2024-12-10",
+              "clinic": "XYZ Clinic",
+              "attachments": ["ecg_image_url"]
+          }
+
+          ,
+          "shared_with": ["coach_id",
+          "family_member_id"]
+        }
+      }
+    }
+  }
+}
+
+``` ### **Steps to Implement:** 1. **Set Up Firebase**: - Create a Firebase project and set up Firebase Authentication,
+Firestore (Database),
+and Firebase Cloud Messaging (for notifications). - Define Firestore rules to control access to the data. 2. **Create the Flutter App**: - Implement the medical screening form with all necessary fields and validation. - Use `firebase_auth` for authentication and `cloud_firestore` for storing medical data. - Use `firebase_messaging` for push notifications. 3. **Create the Web App**: - Use Next.js or a similar framework for creating a responsive web interface. - Integrate with Firebase for storing/retrieving medical data and managing notifications. 4. **Implement Notification System**: - Set up Firebase Cloud Messaging to send notifications to players and stakeholders when a screening is due or completed. 5. **Design Health Dashboard**: - Build a health dashboard where players,
+coaches,
+and family members can view past medical screening data,
+edit it,
+or share it. 6. **Data Privacy & Security**: - Ensure that only authorized users (coaches, team managers, family members) can access sensitive data. - Anonymize the data for third-party users. --- This project involves several technical aspects,
+including user authentication,
+data management,
+push notifications,
+and file handling,
+all while ensuring proper privacy and security. You'll also need to integrate Flutter for mobile apps, a responsive web interface, Firebase backend, and potentially BigQuery for analytics and AI integration.
+
+Let me know if you need more detailed explanations or help with a specific part of the project ! */
