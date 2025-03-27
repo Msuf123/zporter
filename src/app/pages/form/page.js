@@ -14,7 +14,7 @@ import { collection, addDoc,updateDoc ,doc} from "firebase/firestore";
 import { onAuthStateChanged } from 'firebase/auth';
 
 
-export default function UserForm({id,generalHealthProp,hasHealthIssuesProp,allergiesProp,intolerancesProp,bloodTypeProp,vaccinationsProp,illnessProp,injuryProp,
+export default function UserForm({id,generalHealthProp,imageUrlProp,hasHealthIssuesProp,allergiesProp,intolerancesProp,bloodTypeProp,vaccinationsProp,illnessProp,injuryProp,
   ECGTestProp,userNameProp,familyHistoryProp}) {
   const [generalHealth, setGeneralHealth] = useState(generalHealthProp||5);
   const [hasHealthIssues, setHasHealthIssues] = useState(hasHealthIssuesProp||{
@@ -32,6 +32,7 @@ export default function UserForm({id,generalHealthProp,hasHealthIssuesProp,aller
   const [ECGTest,setECGTest]=useState(ECGTestProp||'')
   const [userName,setUserName]=useState(userNameProp||'')
   const [familyHistory,setFamilyHistoryProp]=useState(familyHistoryProp||'')
+  const [imageUrl,setImageUrl]=useState(imageUrlProp||'')
     useEffect(() => {
       // Check if the user is already logged in
       
@@ -59,7 +60,7 @@ export default function UserForm({id,generalHealthProp,hasHealthIssuesProp,aller
       vaccinations,
       ECGTest,
       illness,
-      injury
+      injury,imageUrl
     };
     console.log(formData);
     console.log('hi')
@@ -70,7 +71,9 @@ export default function UserForm({id,generalHealthProp,hasHealthIssuesProp,aller
     if (id) {
         // Update document if `id` exists
         const docRef = doc(firestore, 'record', id); // Reference to the document we want to update
-        updateDoc(docRef, { userName, ...formData }).then((docREf)=>{
+        const currentDateTime = new Date();
+        const formattedDateTime = `${currentDateTime.toLocaleDateString()} ${currentDateTime.toLocaleTimeString()}`;
+        updateDoc(docRef, { userName,formattedDateTime, ...formData }).then((docREf)=>{
           console.log("Documetn updated",docREf.id)
         }) .catch((error) => {
     console.error("Error adding document: ", error);
@@ -109,8 +112,11 @@ export default function UserForm({id,generalHealthProp,hasHealthIssuesProp,aller
         vaccinationValue={vaccinationsProp}
       />
       <MajorHistory onIllnessChange={setIllness} onFamilyHistoryChange={setFamilyHistoryProp} familyHistoryProp={familyHistoryProp} onInjuryChange={setInjury} illnesshistoryProp={illnessProp} injuryHistoryProp={injuryProp} ></MajorHistory>
-      <ECGTestHistory ecgDetailsValue={ECGTestProp.ecgDetails} ecgTestLocation={ECGTestProp.testLocation} ecgTestPreformedBy={ECGTestProp.testPerformedBy}
-       onECGTestChange={setECGTest} handleSubmitCall={handleSubmit} ></ECGTestHistory>
+      {ECGTestProp?<ECGTestHistory ecgDetailsValue={ECGTestProp.ecgDetails} ecgTestLocation={ECGTestProp.testLocation} ecgTestPreformedBy={ECGTestProp.testPerformedBy}
+       onECGTestChange={setECGTest} handleSubmitCall={handleSubmit} imageUrl={imageUrl} changeImageUrl={setImageUrl}></ECGTestHistory>:
+       <ECGTestHistory onECGTestChange={setECGTest} handleSubmitCall={handleSubmit} imageUrl={imageUrl} changeImageUrl={setImageUrl}></ECGTestHistory>
+       }
+      
      
     </div>
   );

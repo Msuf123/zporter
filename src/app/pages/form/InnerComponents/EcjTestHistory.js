@@ -1,61 +1,105 @@
 'use client';
 import { storage } from '@/lib/firebase';
 import { useState } from 'react';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL,deleteObject } from 'firebase/storage';
 
-const ECGTestHistory = ({ onECGTestChange,handleSubmitCall,ecgDetailsValue,ecgTestLocation ,ecgTestPreformedBy}) => {
-  
+const ECGTestHistory = ({ onECGTestChange,handleSubmitCall,ecgDetailsValue,ecgTestLocation ,ecgTestPreformedBy,imageUrl,changeImageUrl}) => {
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
   const [ecgDetails, setEcgDetails] = useState(ecgDetailsValue||'');
   const [testLocation, setTestLocation] = useState(ecgTestLocation||'');
   const [testPerformedBy, setTestPerformedBy] = useState(ecgTestPreformedBy||'');
-  const [fileAttachment, setFileAttachment] = useState(null);
- const [filePreview, setFilePreview] = useState(null); // For image/video preview
- const uploadFileToFirebase = async () => {
-    if (!fileAttachment) return;
+  const [fileAttachments, setFileAttachment] = useState(null);
+ const [filePreview, setFilePreview] = useState(imageUrl||null); // For image/video preview
+ const [imageUplaoding,setImageUplaoding]=useState(false)
+ const handleDelete = async () => {
+  
+
+  try {
+    console.log('Image deleted successfully');
+    changeImageUrl('');
+    setImageUplaoding(false);
+    setFilePreview(null);  // Reset file preview
+    setFileAttachment(null);
+    // Get the reference to the file you want to delete
+    const filePath = decodeURIComponent(imageUrl.split('o/')[1].split('?')[0]);
+
+    const fileRef = ref(storage, filePath);
+
+    // Delete the file from Firebase Storage
+    await deleteObject(fileRef);
+     handleSubmit()
+    // After deletion, update the UI and state
+     // Reset the file attachment state
+  } catch (error) {
+    console.error('Error deleting file:', error);
+  }
+};
+
+ const uploadFileToFirebase = async (fileAttachment) => {
+    if (!fileAttachment) {
+      console.log("reutnring")
+      return
+    };
 
     try {
       
       const storageRef = ref(storage, `uploads/${fileAttachment.name}`);
       const snapshot = await uploadBytes(storageRef, fileAttachment);
       const downloadURL = await getDownloadURL(snapshot.ref);
-      
+
       // After upload, set the URL and update Firestore if needed
       console.log('File uploaded successfully. File URL:', downloadURL);
       
       // Optionally, update Firestore with the file URL
        console.log(downloadURL)
-
+       changeImageUrl(downloadURL)
+        setImageUplaoding(false)
       // Update your state or perform any further actions with the URL
       // Example: setState(downloadURL) or trigger another function
     } catch (error) {
       console.error('Error uploading file:', error);
     }
   };
+
+
+
+
   const handleEcgHistoryChange = (e) => {
     setEcgDetails(e.target.value);
           onECGTestChange({ecgDetails,testLocation,testPerformedBy});
   };
+
+
 
   const handleTestLocationChange = (e) => {
     setTestLocation(e.target.value);
           onECGTestChange({ecgDetails,testLocation,testPerformedBy});
   };
 
+
+
   const handleTestPerformedByChange = (e) => {
     setTestPerformedBy(e.target.value);
           onECGTestChange({ecgDetails,testLocation,testPerformedBy});
   };
 
+
+
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    setImageUplaoding(true)
     if (file) {
       setFileAttachment(file);
-      
+      console.log('uplading')
+         uploadFileToFirebase(file)
       // Show image preview if it's an image file
       if (file.type.startsWith("image/")) {
         const reader = new FileReader();
+        
         reader.onloadend = () => {
           setFilePreview(reader.result);
+         
         };
         reader.readAsDataURL(file);
       } else {
@@ -67,6 +111,9 @@ const ECGTestHistory = ({ onECGTestChange,handleSubmitCall,ecgDetailsValue,ecgTe
     }
   };
 
+
+
+
   const handleSubmit = () => {
     if (ecgDetails) {
       handleSubmitCall()
@@ -77,6 +124,14 @@ const ECGTestHistory = ({ onECGTestChange,handleSubmitCall,ecgDetailsValue,ecgTe
       setFileAttachment(null);
     }
   };
+
+
+
+
+
+
+
+
 
 
 
@@ -117,25 +172,40 @@ const ECGTestHistory = ({ onECGTestChange,handleSubmitCall,ecgDetailsValue,ecgTe
       </div>
 
       <div style={styles.section}>
-      <label style={styles.label}>Attach Image/Video:</label>
+        {!filePreview?<div>
+<label style={styles.label}>Attach Image/Video:</label>
       <input
         type="file"
         accept="image/*, video/*"
         onChange={handleFileChange}
         style={styles.fileInput}
       />
+        </div>:null}
       
-      {/* Show image/video preview if file is an image */}
-      {filePreview && (
-        <div>
-          <img src={filePreview} alt="Preview" style={{ maxWidth: '300px', maxHeight: '300px' }} />
+      
+       {filePreview && (
+        <div style={{position:"relative",display:"flex",alignItems:'center',justifyContent:"center"}} onMouseLeave={() => setShowDeleteButton(false)} onMouseEnter={() => setShowDeleteButton(true)} >
+          <div style={imageUplaoding?{backgroundColor:"rgba(20, 20, 20, 0.54)",position:"absolute",top:"0px",left:"0px",right:"0px",bottom:"0px",display:"flex",alignItems:'center',justifyContent:"center"}:{display:"none"}}>
+            <span style={{color:"white"}}>Uploading...</span>
+          </div>
+          <img src={filePreview} alt="Preview" style={{ maxWidth: '300px', maxHeight: '300px' }}  />
+          <div style={showDeleteButton&&!imageUplaoding?{backgroundColor:"rgba(20, 20, 20, 0.54)",position:"absolute",top:"0px",left:"0px",right:"0px",bottom:"0px",display:"flex",
+            alignItems:"center",justifyContent:"center"
+          }:{display:"none"}}>
+             <button onClick={handleDelete} style={{
+    backgroundColor: 'red',
+    color: 'white',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '16px',
+  }}>Delete</button>
+          </div>
         </div>
       )}
 
-      {/* Optionally, add a button to trigger file upload */}
-      {fileAttachment && (
-        <button onClick={uploadFileToFirebase}>Upload File</button>
-      )}
+
     </div>
 
       <button onClick={handleSubmit} style={styles.submitButton}>

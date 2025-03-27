@@ -41,6 +41,7 @@ const EditPage = () => {
       <h1>Edit Data</h1>
       <UserForm id={id} generalHealthProp={data.generalHealth} hasHealthIssuesProp={data.hasHealthIssues} intolerancesProp={data.intolerances} allergiesProp={data.allergies}
       bloodTypeProp={data.bloodType} vaccinationsProp={data.vaccinations} injuryProp={data.injury} illnessProp={data.illness} ECGTestProp={data.ECGTest}
+      imageUrlProp={data.imageUrl}
       ></UserForm>
     </div>
   );
