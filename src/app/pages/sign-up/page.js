@@ -1,7 +1,7 @@
 "use client"; // Ensure it's treated as a client component
 
 import { useState, useEffect } from "react";
-import { signup } from "@/lib/AuthFunctions"; // Importing the signup function
+import { signups } from "@/lib/AuthFunctions"; // Importing the signup function
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const SignUp = () => {
