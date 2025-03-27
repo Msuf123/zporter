@@ -4,7 +4,7 @@ import { app } from './firebase';
 const auth = getAuth(app);
 
 // Sign Up Function
-export const signups = async (email, password) => {
+ const signups = async (email, password) => {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
     console.log('User signed up successfully');
