@@ -31,9 +31,11 @@ export const logout = async () => {
   try {
     await signOut(auth);
     console.log('User signed out successfully');
+    return true
   } catch (error) {
     console.error(error.message);
-    throw error;
+
+    return false
   }
 };
-export{signups,signInWithEmailAndPassword,signOut}
+export{signups,signInWithEmailAndPassword,logout}

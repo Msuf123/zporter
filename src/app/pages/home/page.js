@@ -6,12 +6,20 @@ import { getUserData } from './fetchFunction/fetchFunction';
 import Loader from './InnerComponents/Loading/loading';
 import style from './page.module.css';
 import { ScreeningCard } from './InnerComponents/Cards/Cards';
+import { logout } from '@/lib/AuthFunctions';
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [data,setData]=useState([])
   function onLogout() {
     // Add logout logic here
+    logout().then((a)=>{
+      if(a){
+         window.location.href = 'login';
+      }else{
+        alert("Error")
+      }
+    })
   }
 
   // Fetch user info when component mounts

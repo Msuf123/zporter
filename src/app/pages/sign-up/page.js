@@ -34,7 +34,7 @@ const SignUp = () => {
     setError('');
     setSuccess('');
     try {
-      let res=await signup(email, password); // Calls the signup function
+      let res=await signups(email, password); // Calls the signup function
       setSuccess("Sign Up Successful!");
       if(res){
            window.location.href = 'pages/home'; 
