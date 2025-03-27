@@ -72,7 +72,7 @@ const Dashboard = () => {
 </button>
 <div style={{display:'grid',gridTemplateColumns:"1fr 1fr 1fr",gap:"5px",width:"90%",margin:"auto"}}>
   
-{data.map((i,k)=><ScreeningCard key={k} data={i} tabIndex={k}></ScreeningCard>)}
+{data.length!==0?data.map((i,k)=><ScreeningCard key={k} data={i} tabIndex={k}></ScreeningCard>):null}
     </div>
   
     </div>

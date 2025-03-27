@@ -28,9 +28,11 @@ async function getUserData(username) {
       return array
     } else {
       console.log("No matching records found");
+      return []
     }
   } catch (error) {
     console.error("Error fetching user data:", error);
+    return []
   }
 }
 
