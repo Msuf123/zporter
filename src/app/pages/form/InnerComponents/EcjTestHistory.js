@@ -11,6 +11,7 @@ const ECGTestHistory = ({ onECGTestChange,handleSubmitCall,ecgDetailsValue,ecgTe
   const [fileAttachments, setFileAttachment] = useState(null);
  const [filePreview, setFilePreview] = useState(imageUrl||null); // For image/video preview
  const [imageUplaoding,setImageUplaoding]=useState(false)
+ const [loading,setLoaidng]=useState(false)
  const handleDelete = async () => {
   
 
@@ -118,8 +119,9 @@ const ECGTestHistory = ({ onECGTestChange,handleSubmitCall,ecgDetailsValue,ecgTe
 
   const handleSubmit = () => {
     if (ecgDetails) {
+      setLoaidng(true)
       handleSubmitCall()
-      
+      setLoaidng(false)
       setEcgDetails('');
       setTestLocation('');
       setTestPerformedBy('');
@@ -215,7 +217,7 @@ const handleImageError = () => {
     </div>
 
       <button onClick={handleSubmit} style={styles.submitButton}>
-        Save Details
+       {loading?"Loading":"Save Details"}
       </button>
 
      
@@ -285,6 +287,7 @@ const styles = {
     borderRadius: '5px',
     cursor: 'pointer',
     width: '100%',
+    margin:"10px 0px 40px 0px"
   },
   historyContainer: {
     marginTop: '20px',

@@ -77,6 +77,11 @@ export default function UserForm({id,generalHealthProp,imageUrlProp,hasHealthIss
         const formattedDateTime = `${currentDateTime.toLocaleDateString()} ${currentDateTime.toLocaleTimeString()}`;
         updateDoc(docRef, { userName,formattedDateTime, ...formData }).then((docREf)=>{
           console.log("Documetn updated")
+          alert("Eamil sent to trainer")
+          setTimeout(()=>{
+    window.location.href = '/pages/home';
+          },2000)
+      
         }) .catch((error) => {
     console.error("Error adding document: ", error);
   });// Update the document with new data
@@ -84,13 +89,15 @@ export default function UserForm({id,generalHealthProp,imageUrlProp,hasHealthIss
       }
     else{
    const usersCollectionRef = collection(firestore,"record");
-
-    addDoc(usersCollectionRef,{userName,...formData})
+const currentDateTime = new Date();
+        const formattedDateTime = `${currentDateTime.toLocaleDateString()} ${currentDateTime.toLocaleTimeString()}`;
+    addDoc(usersCollectionRef,{userName,...formData,formattedDateTime})
   .then((docRef) => {
     console.log("Document written with ID: ", docRef.id);
   })
   .catch((error) => {
     console.error("Error adding document: ", error);
+    alert("Error while updating doc")
   });
 }
   };
