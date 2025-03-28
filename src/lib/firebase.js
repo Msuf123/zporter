@@ -6,13 +6,13 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // Your Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyBdMEcdp35zggQs42z-apy-ttOHtRDou5c",
-  authDomain: "zporter-82cbe.firebaseapp.com",
-  projectId: "zporter-82cbe",
-  storageBucket: "zporter-82cbe.firebasestorage.app",
-  messagingSenderId: "1063052264864",
-  appId: "1:1063052264864:web:d33890fef736c0501410c5",
-  measurementId: "G-7K1FR68FHX"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
