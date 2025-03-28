@@ -60,7 +60,7 @@ export default function UserForm({id,generalHealthProp,imageUrlProp,hasHealthIss
       vaccinations,
       ECGTest,
       illness,
-      injury,imageUrl
+      injury,imageUrl,familyHistory
     };
     console.log(formData);
     console.log('hi')
